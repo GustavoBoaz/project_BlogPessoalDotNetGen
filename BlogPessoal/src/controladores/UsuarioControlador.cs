@@ -34,63 +34,6 @@ namespace BlogPessoal.src.controladores
         #region Métodos
 
         /// <summary>
-        /// Pegar todos usuarios
-        /// </summary>
-        /// <returns>ActionResult</returns>
-        /// <response code="200">Lista de usuarios</response>
-        /// <response code="204">Lista vasia</response>
-        [HttpGet("todos")]
-        [Authorize]
-        public async Task<ActionResult> PegarTodosUsuariosAsync()
-        {
-            var lista = await _repositorio.PegarTodosUsuariosAsync();
-
-            if (lista.Count < 1) return NoContent();
-            
-            return Ok(lista);
-        }
-
-        /// <summary>
-        /// Pegar usuario pelo Id
-        /// </summary>
-        /// <param name="idUsuario">Id do usuario</param>
-        /// <returns>ActionResult</returns>
-        /// <response code="200">Retorna o usuario</response>
-        /// <response code="404">Id de usuario não existe</response>
-        [HttpGet("id/{idUsuario}")]
-        [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public async Task<ActionResult> PegarUsuarioPeloIdAsync([FromRoute] int idUsuario)
-        {
-            try
-            {
-                return Ok(await _repositorio.PegarUsuarioPeloIdAsync(idUsuario));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { Mensagem = ex.Message });
-            }
-            
-        }
-
-        /// <summary>
-        /// Pegar usuario pelo Nome
-        /// </summary>
-        /// <param name="nomeUsuario">Nome do usuario</param>
-        /// <returns>ActionResult</returns>
-        /// <response code="200">Retorna o usuario</response>
-        /// <response code="204">Nome não existe</response>
-        [HttpGet]
-        [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public async Task<ActionResult> PegarUsuariosPeloNomeAsync([FromQuery] string nomeUsuario)
-        {
-            var usuarios = await _repositorio.PegarUsuariosPeloNomeAsync(nomeUsuario);
-
-            if (usuarios.Count < 1) return NoContent();
-
-             return Ok(usuarios);
-        }
-
-        /// <summary>
         /// Pegar usuario pelo Email
         /// </summary>
         /// <param name="emailUsuario">E-mail do usuario</param>
@@ -144,43 +87,6 @@ namespace BlogPessoal.src.controladores
         }
 
         /// <summary>
-        /// Atualizar Usuario
-        /// </summary>
-        /// <param name="usuario">Construtor para atualizar usuario</param>
-        /// <returns>ActionResult</returns>
-        /// <remarks>
-        /// Exemplo de requisição:
-        ///
-        ///     PUT /api/Usuarios
-        ///     {
-        ///        "id": 1,    
-        ///        "nome": "Gustavo Boaz",
-        ///        "senha": "134652",
-        ///        "foto": "URLFOTO",
-        ///        "tipo": "ADMINISTRADOR"
-        ///     }
-        ///
-        /// </remarks>
-        /// <response code="200">Retorna usuario atualizado</response>
-        /// <response code="400">Erro na requisição</response>
-        [HttpPut]
-        [Authorize(Roles = "NORMAL,ADMINISTRADOR")]
-        public async Task<ActionResult> AtualizarUsuarioAsync([FromBody] Usuario usuario)
-        {
-            usuario.Senha = _servicos.CodificarSenha(usuario.Senha);
-
-            try
-            {
-                await _repositorio.AtualizarUsuarioAsync(usuario);
-                return Ok(usuario);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Mensagem = ex.Message });
-            }
-        }
-
-        /// <summary>
         /// Pegar Autorização
         /// </summary>
         /// <param name="usuario">Construtor para logar usuario</param>
@@ -210,28 +116,6 @@ namespace BlogPessoal.src.controladores
             var token = "Bearer " + _servicos.GerarToken(auxiliar);
 
             return Ok(new { Usuario = auxiliar,  Token = token });
-        }
-
-        /// <summary>
-        /// Deletar usuario pelo Id
-        /// </summary>
-        /// <param name="idUsuario">Id do usuario</param>
-        /// <returns>ActionResult</returns>
-        /// <response code="204">Usuario deletado</response>
-        /// <response code="404">Id de usuario invalido</response>
-        [HttpDelete("deletar/{idUsuario}")]
-        [Authorize(Roles = "ADMINISTRADOR")]
-        public async Task<ActionResult> DeletarUsuarioAsync([FromRoute] int idUsuario)
-        {
-            try
-            {
-                await _repositorio.DeletarUsuarioAsync(idUsuario);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { Mensagem = ex.Message });
-            }
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BlogPessoal.src.contextos;
 using BlogPessoal.src.modelos;
@@ -61,29 +62,6 @@ namespace BlogPessoalTeste.Testes.repositorios
         }
         
         [TestMethod]
-        public async Task PegaTemaPelaDescricaoRetornadoisTemas()
-        {
-            // Definindo o contexto
-            var opt = new DbContextOptionsBuilder<BlogPessoalContexto>()
-                .UseInMemoryDatabase(databaseName: "db_blogpessoal12")
-                .Options;
-
-            _contexto = new BlogPessoalContexto(opt);
-            _repositorio = new TemaRepositorio(_contexto);
-
-            //GIVEN - Dado que registro Java no banco
-            await _repositorio.NovoTemaAsync(new Tema { Descricao = "Java" });
-            //AND - E que registro JavaScript no banco
-            await _repositorio.NovoTemaAsync(new Tema { Descricao = "JavaScript" });
-
-            //WHEN - Quando que pesquiso pela descricao Java
-            var temas = await _repositorio.PegarTemasPelaDescricaoAsync("Java");
-
-            //THEN - Entao deve retornar 2 temas
-            Assert.AreEqual(2, temas.Count);
-        }
-        
-        [TestMethod]
         public async Task AlterarTemaPythonRetornaTemaCobol()
         {
             // Definindo o contexto
@@ -123,8 +101,10 @@ namespace BlogPessoalTeste.Testes.repositorios
             //WHEN - quando deleto o Id 1
             await _repositorio.DeletarTemaAsync(1);
 
-            //THEN - Entao deve retornar nulo
-            Assert.IsNull(await _repositorio.PegarTemaPeloIdAsync(1));
+            //THEN - Entao deve retornar Exception quando pesquisa pelo Id
+            await Assert.ThrowsExceptionAsync<Exception>(async () => {
+                await _repositorio.PegarTemaPeloIdAsync(1);
+            });
         }
     }
 }

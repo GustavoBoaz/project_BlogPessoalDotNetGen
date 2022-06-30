@@ -69,24 +69,6 @@ namespace BlogPessoal.src.controladores
         }
 
         /// <summary>
-        /// Pegar tema pela Descrição
-        /// </summary>
-        /// <param name="descricaoTema">Descrição do tema</param>
-        /// <returns>ActionResult</returns>
-        /// <response code="200">Retorna temas</response>
-        /// <response code="204">Descrição não existe</response>
-        [HttpGet("pesquisa")]
-        [Authorize]
-        public async Task<ActionResult> PegarTemasPelaDescricaoAsync([FromQuery] string descricaoTema)
-        {
-            var temas = await _repositorio.PegarTemasPelaDescricaoAsync(descricaoTema);
-
-            if (temas.Count < 1) return NoContent();
-            
-            return Ok(temas);
-        }
-
-        /// <summary>
         /// Criar novo Tema
         /// </summary>
         /// <param name="tema">Construtor para criar tema</param>

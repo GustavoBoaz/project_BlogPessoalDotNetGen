@@ -63,18 +63,6 @@ namespace BlogPessoal.src.repositorios.implementacoes
         }
 
         /// <summary>
-        /// <para>Resumo: Método assíncrono para pegar temas pela descrição</para>
-        /// </summary>
-        /// <param name="descricao">Descrição do tema</param>
-        /// <return>Lista TemaModelo</return>
-        public async Task<List<Tema>> PegarTemasPelaDescricaoAsync(string descricao)
-        {
-            return await _contexto.Temas
-                            .Where(u => u.Descricao.Contains(descricao))
-                            .ToListAsync();
-        }
-
-        /// <summary>
         /// <para>Resumo: Método assíncrono para salvar um novo tema</para>
         /// </summary>
         /// <param name="tema">Construtor para cadastrar tema</param>

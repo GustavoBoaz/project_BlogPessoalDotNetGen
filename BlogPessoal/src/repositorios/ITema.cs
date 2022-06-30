@@ -14,7 +14,6 @@ namespace BlogPessoal.src.repositorios
     {
         Task<List<Tema>> PegarTodosTemasAsync();
         Task<Tema> PegarTemaPeloIdAsync(int id);
-        Task<List<Tema>> PegarTemasPelaDescricaoAsync(string descricao);
         Task NovoTemaAsync(Tema tema);
         Task AtualizarTemaAsync(Tema tema);
         Task DeletarTemaAsync(int id);

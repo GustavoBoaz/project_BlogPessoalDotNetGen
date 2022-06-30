@@ -12,12 +12,7 @@ namespace BlogPessoal.src.repositorios
     /// </summary>
     public interface IUsuario
     {
-        Task<List<Usuario>> PegarTodosUsuariosAsync();
-        Task<Usuario> PegarUsuarioPeloIdAsync(int id);
-        Task<List<Usuario>> PegarUsuariosPeloNomeAsync(string nome);
         Task<Usuario> PegarUsuarioPeloEmailAsync(string email);
         Task NovoUsuarioAsync(Usuario usuario);
-        Task AtualizarUsuarioAsync(Usuario usuario);
-        Task DeletarUsuarioAsync(int id);  
     }
 }

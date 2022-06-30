@@ -14,7 +14,6 @@ namespace BlogPessoal.src.repositorios
     {
         Task<List<Postagem>> PegarTodasPostagensAsync();
         Task<Postagem> PegarPostagemPeloIdAsync(int id);
-        Task<List<Postagem>> PegarPostagensPorPesquisaAsync(string titulo, string descricaoTema, string emailCriador);
         Task NovaPostagemAsync(Postagem postagem);
         Task AtualizarPostagemAsync(Postagem postagem);
         Task DeletarPostagemAsync(int id);

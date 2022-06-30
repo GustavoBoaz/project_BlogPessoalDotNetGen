@@ -69,29 +69,6 @@ namespace BlogPessoal.src.controladores
         }
 
         /// <summary>
-        /// Pegar postagens por Pesquisa
-        /// </summary>
-        /// <param name="tituloPostagem">Titulo da postagem</param>
-        /// <param name="descricaoTema">Descrição do tema</param>
-        /// <param name="emailCriador">E-mail do criador</param>
-        /// <returns>ActionResult</returns>
-        /// <response code="200">Retorna postagens</response>
-        /// <response code="204">Postagens não existe pra essa pesquisa</response>
-        [HttpGet("pesquisa")]
-        [Authorize]
-        public async Task<ActionResult> PegarPostagensPorPesquisaAsync(
-            [FromQuery] string tituloPostagem,
-            [FromQuery] string descricaoTema,
-            [FromQuery] string emailCriador)
-        {
-            var postagens = await _repositorio.PegarPostagensPorPesquisaAsync(tituloPostagem, descricaoTema, emailCriador);
-            
-            if (postagens.Count < 1) return NoContent();
-            
-            return Ok(postagens);
-        }
-
-        /// <summary>
         /// Criar nova Postagem
         /// </summary>
         /// <param name="postagem">Construtor para criar postagem</param>
